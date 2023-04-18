@@ -1,18 +1,6 @@
-# Use base node image
-FROM quay.io/eclipse/che-nodejs10-ubi:nightly
+FROM registry.redhat.io/devspaces/udi-rhel8:3.5
 
-RUN mkdir /home/nodejs-mongodb-sample
-WORKDIR /home/nodejs-mongodb-sample
+RUN curl -fsSL -o mongodb-database-tools-x86_64.rpm https://fastdl.mongodb.org/tools/db/mongodb-database-tools-rhel80-x86_64-100.7.0.rpm && \
+    dnf install -y ./mongodb-database-tools-x86_64.rpm; \
+    rm -f ./mongodb-database-tools-x86_64.rpm
 
-# Copy package.json and install dependencies
-COPY package*.json ./
-RUN npm install
-
-# Copy rest of the application source code
-COPY . .
-
-# Run app.js with debugging port when container launches
-ENTRYPOINT ["npm", "run-script", "debug"]
-
-# Comment above and uncomment below to run app.js without debugger port when container launches
-# ENTRYPOINT ["npm", "start"]
