@@ -23,34 +23,10 @@ components:
   - name: npm
     volume:
       size: 1G
-  - name: mongo
-    container:
-      image: registry.redhat.io/rhscl/mongodb-36-rhel7:1-50
-      env:
-        - name: MONGODB_USER
-          value: user
-        - name: MONGODB_PASSWORD
-          value: password
-        - name: MONGODB_DATABASE
-          value: guestbook
-        - name: MONGODB_ADMIN_PASSWORD
-          value: password
-      endpoints:
-        - name: mongodb
-          exposure: internal
-          targetPort: 27017
-      memoryLimit: 512Mi
-      mountSources: false
-      volumeMounts:
-        - name: mongo-storage
-          path: /var/lib/mongodb/data
-  - name: mongo-storage
-    volume:
-      size: 1G
 commands:
   - id: 1-run
     exec:
-      label: "Run the application"
+      label: "Build and Run the application"
       component: nodejs
       workingDir: ${PROJECTS_ROOT}/nodejs-mongodb-sample
       commandLine: "npm install && node --inspect=9229 app.js"
