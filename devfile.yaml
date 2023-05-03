@@ -26,7 +26,7 @@ components:
 commands:
   - id: 1-run
     exec:
-      label: "Run the application"
+      label: "Build and Run the application"
       component: nodejs
       workingDir: ${PROJECTS_ROOT}/guestbook
       commandLine: "npm install && node --inspect=9229 app.js"
